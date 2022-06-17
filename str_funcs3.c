@@ -12,14 +12,14 @@
  */
 void replace_str(char **old_str, char *new_str, int i, int j, int flg)
 {
-  char *tmp;
+	char *tmp;
 
-  tmp = _str_replace(*old_str, i, j, new_str);
-  free(*old_str);
-  *old_str = tmp;
-  if (flg)
-    if (new_str[0])
-      free(new_str);
+	tmp = _str_replace(*old_str, i, j, new_str);
+	free(*old_str);
+	*old_str = tmp;
+	if (flg)
+		if (new_str[0])
+			free(new_str);
 }
 
 /**
@@ -30,30 +30,31 @@ void replace_str(char **old_str, char *new_str, int i, int j, int flg)
  */
 char **separate_string(char *string)
 {
-  char **result, *left, *right;
-  int i, j, lenleft = 0, lenright = 0;
+	char **result, *left, *right;
+	int i, j, lenleft = 0, lenright = 0;
 
-  while (string[lenleft] != '=')
-    lenleft++;
-  left = safe_malloc(sizeof(char) * lenleft + 1);
+	while (string[lenleft] != '=')
+		lenleft++;
+	left = safe_malloc(sizeof(char) * lenleft + 1);
 
-  for (i = 0; i < lenleft; i++)
-    left[i] = string[i];
+	for (i = 0; i < lenleft; i++)
+		left[i] = string[i];
 
-  i = lenleft + 1;
+	i = lenleft + 1;
 
-  while (string[i] != '\0')
-    lenright++, i++;
-  right = safe_malloc(sizeof(char) * lenright + 1);
+	while (string[i] != '\0')
+		lenright++, i++;
+	right = safe_malloc(sizeof(char) * lenright + 1);
 
-  for (i = lenleft + 1, j = 0; j < lenright; i++, j++)
-    right[j] = string[i];
+	for (i = lenleft + 1, j = 0; j < lenright; i++, j++)
+		right[j] = string[i];
 
-  result = safe_malloc(sizeof(char *) * 3);
-  result[0] = left, result[1] = right;
+	result = safe_malloc(sizeof(char *) * 3);
+	result[0] = left, result[1] = right;
 
-  return (result);
+	return (result);
 }
+
 /**
  * int_to_str - convert an integer to a string
  * @n: unsigned integer to print
@@ -61,41 +62,42 @@ char **separate_string(char *string)
  */
 char *int_to_str(unsigned int n)
 {
-  unsigned int copy, size;
-  int nth, chars_written;
-  char *str;
-  int  chars;
+	unsigned int copy, size;
+	int nth, chars_written;
+	char *str;
+	int  chars;
 
-  size = 1;
-  chars_written = 0;
-  copy = n;
+	size = 1;
+	chars_written = 0;
+	copy = n;
 
-  if (n < 10)
-    {
-      str = safe_malloc(2);
-      str[0] = ('0' + n);
-      return (str);
-    }
+	if (n < 10)
+	{
+		str = safe_malloc(2);
+		str[0] = ('0' + n);
+		return (str);
+	}
 
-  chars = 0;
-  while (copy / 10 != 0)
-    {
-      copy /= 10, size *= 10;
-      chars++;
-    }
+	chars = 0;
+	while (copy / 10 != 0)
+	{
+		copy /= 10, size *= 10;
+		chars++;
+	}
 
-  str = safe_malloc(chars + 2);
-  while (size > 0)
-    {
-      nth = n / size;
-      str[chars_written] = ('0' + nth);
-      n -= nth * size;
-      size /= 10;
-      chars_written++;
-    }
-  str[chars_written] = '\0';
-  return (str);
+	str = safe_malloc(chars + 2);
+	while (size > 0)
+	{
+		nth = n / size;
+		str[chars_written] = ('0' + nth);
+		n -= nth * size;
+		size /= 10;
+		chars_written++;
+	}
+	str[chars_written] = '\0';
+	return (str);
 }
+
 /**
  * str_replace - replaces part of a string for another
  * @string: string to replace
@@ -106,18 +108,18 @@ char *int_to_str(unsigned int n)
  * Return: replaced string
  */
 char *_str_replace(char *string, unsigned int start, unsigned int end,
-		   char *rep)
+				   char *rep)
 {
-  char *new_str;
+	char *new_str;
 
-  new_str = safe_malloc(_strlen(string) + _strlen(rep) + 1);
+	new_str = safe_malloc(_strlen(string) + _strlen(rep) + 1);
 
-  _strncpy(new_str, string, start);
+	_strncpy(new_str, string, start);
 
-  _strcat(new_str, rep);
+	_strcat(new_str, rep);
 
-  if (end < _strlen(string) - 1)
-    _strcat(new_str, &string[end + 1]);
+	if (end < _strlen(string) - 1)
+		_strcat(new_str, &string[end + 1]);
 
-  return (new_str);
+	return (new_str);
 }
