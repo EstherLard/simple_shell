@@ -148,3 +148,4 @@ pid_t execute(arg_inventory_t *arginv)
 	}
 	free(command);
 	return (-1);
+}
