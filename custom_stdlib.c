@@ -8,20 +8,20 @@
  */
 char _isspace(char c)
 {
-  int i;
+	int i;
 
-  switch (c)
-    {
-    case ' ': case '\t': case '\n':
-    case '\v': case '\f': case '\r':
-      i = 1;
-      break;
-    default:
-      i = 0;
-      break;
-    }
+	switch (c)
+	{
+	case ' ': case '\t': case '\n':
+	case '\v': case '\f': case '\r':
+		i = 1;
+		break;
+	default:
+		i = 0;
+		break;
+	}
 
-  return (i);
+	return (i);
 }
 
 /**
@@ -32,20 +32,20 @@ char _isspace(char c)
  */
 int _atoi(char *s)
 {
-  int result = 0, sign = 0, c;
+	int result = 0, sign = 0, c;
 
-  for (c = 0; s[c] != '\0'; c++)
-    {
-      if (s[c] == '-')
-	sign++;
-      if (s[c] > 47 && s[c] < 58)
+	for (c = 0; s[c] != '\0'; c++)
 	{
-	  while (s[c] > 47 && s[c] < 58)
-	    result = result * 10 - (s[c++] - 48);
-	  break;
+		if (s[c] == '-')
+			sign++;
+		if (s[c] > 47 && s[c] < 58)
+		{
+			while (s[c] > 47 && s[c] < 58)
+				result = result * 10 - (s[c++] - 48);
+			break;
+		}
 	}
-    }
-  return (result *= sign % 2 == 0 ? -1 : 1);
+	return (result *= sign % 2 == 0 ? -1 : 1);
 }
 
 /**
@@ -56,11 +56,11 @@ int _atoi(char *s)
  */
 void _perror(char *string)
 {
-  unsigned int len;
+	unsigned int len;
 
-  len = _strlen(string);
+	len = _strlen(string);
 
-  write(STDERR_FILENO, string, len);
+	write(STDERR_FILENO, string, len);
 }
 
 /**
@@ -71,19 +71,19 @@ void _perror(char *string)
  */
 void _memmove(void *dest, void *src, size_t n)
 {
-  char *copy_source, *copy_dest, *temp;
-  size_t i;
+	char *copy_source, *copy_dest, *temp;
+	size_t i;
 
-  copy_source = (char *)src;
-  copy_dest = (char *)dest;
-  temp = malloc(sizeof(char) * 1024);
+	copy_source = (char *)src;
+	copy_dest = (char *)dest;
+	temp = malloc(sizeof(char) * 1024);
 
-  for (i = 0; i < n; i++)
-    temp[i] = copy_source[i];
+	for (i = 0; i < n; i++)
+		temp[i] = copy_source[i];
 
-  for (i = 0; i < n; i++)
-    copy_dest[i] = temp[i];
-  free(temp);
+	for (i = 0; i < n; i++)
+		copy_dest[i] = temp[i];
+	free(temp);
 }
 
 /**
@@ -93,17 +93,17 @@ void _memmove(void *dest, void *src, size_t n)
  */
 int is_uint(char *num)
 {
-  int i = 0;
+	int i = 0;
 
-  while (num[i])
-    {
-      if (num[i] > 47 && num[i] < 58)
-	i++;
-      else if (num[i] == 45 && i == 0)
-	return (FALSE);
-      else
-	return (FALSE);
-    }
+	while (num[i])
+	{
+		if (num[i] > 47 && num[i] < 58)
+			i++;
+		else if (num[i] == 45 && i == 0)
+			return (FALSE);
+		else
+			return (FALSE);
+	}
 
-  return (TRUE);
+	return (TRUE);
 }
