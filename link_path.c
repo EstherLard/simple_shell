@@ -9,22 +9,22 @@
  */
 int locate_path(char *path, env_t *envlist)
 {
-  env_t *tmp;
+	env_t *tmp;
 
-  tmp = envlist;
+	tmp = envlist;
 
-  while (tmp)
-    {
-      if (_strcmp(tmp->var, "PATH") == 0)
+	while (tmp)
 	{
-	  _strcpy(path, tmp->val);
-	  return (1);
+		if (_strcmp(tmp->var, "PATH") == 0)
+		{
+			_strcpy(path, tmp->val);
+			return (1);
+		}
+
+		tmp = tmp->next;
 	}
 
-      tmp = tmp->next;
-    }
-
-  return (0);
+	return (0);
 }
 
 /**
@@ -36,33 +36,33 @@ int locate_path(char *path, env_t *envlist)
  */
 int cat_path(char **search_path, char *cmd)
 {
-  int i, fd, len;
-  char *new;
+	int i, fd, len;
+	char *new;
 
-  new = safe_malloc(BUFSIZE);
+	new = safe_malloc(BUFSIZE);
 
-  for (i = 0; search_path[i] != NULL; i++)
-    {
-      new = _strcpy(new, search_path[i]);
-      len = _strlen(new);
-      new[len] = '/';
-
-      new = _strncat(new, cmd, _strlen(cmd));
-      fd = access(new, F_OK);
-      if (fd == 0)
+	for (i = 0; search_path[i] != NULL; i++)
 	{
-	  _strcpy(cmd, new);
-	  free(new);
-	  return (0);
-	}
-      else
-	{
-	  new = mem_reset(new, BUFSIZE);
-	}
-    }
+		new = _strcpy(new, search_path[i]);
+		len = _strlen(new);
+		new[len] = '/';
 
-  free(new);
-  return (-1);
+		new = _strncat(new, cmd, _strlen(cmd));
+		fd = access(new, F_OK);
+		if (fd == 0)
+		{
+			_strcpy(cmd, new);
+			free(new);
+			return (0);
+		}
+		else
+		{
+			new = mem_reset(new, BUFSIZE);
+		}
+	}
+
+	free(new);
+	return (-1);
 }
 
 /**
@@ -73,21 +73,21 @@ int cat_path(char **search_path, char *cmd)
  */
 int count_paths(char *path_str)
 {
-  unsigned int i, count;
+	unsigned int i, count;
 
-  i = 0;
-  count = 0;
+	i = 0;
+	count = 0;
 
-  if (path_str[0] != '\0')
-    count++;
+	if (path_str[0] != '\0')
+		count++;
 
-  while (path_str[i])
-    {
-      if (path_str[i] == ':')
-	count++;
-      i++;
-    }
-  return (count);
+	while (path_str[i])
+	{
+		if (path_str[i] == ':')
+			count++;
+		i++;
+	}
+	return (count);
 }
 
 /**
@@ -98,40 +98,40 @@ int count_paths(char *path_str)
  */
 char **tokenize_path(char *path_str)
 {
-  unsigned int start, end;
-  unsigned int i, count;
-  char **paths;
+	unsigned int start, end;
+	unsigned int i, count;
+	char **paths;
 
-  paths = safe_malloc((count_paths(path_str) + 1) * sizeof(char *));
+	paths = safe_malloc((count_paths(path_str) + 1) * sizeof(char *));
 
-  i = 0;
-  count = 0;
-  start = 0;
+	i = 0;
+	count = 0;
+	start = 0;
 
-  while (1)
-    {
-      if (path_str[i] == ':' || path_str[i] == '\0')
+	while (1)
 	{
-	  end = i;
-	  if (end == start)
-	    {
-	      paths[count] = safe_malloc(3 * sizeof(char));
-	      _strcpy(paths[count], "./");
-	    }
-	  else
-	    {
-	      paths[count] = safe_malloc((end - start + 1) * sizeof(char));
-	      _strncpy(paths[count], &path_str[start], end - start);
-	    }
-	  count++;
-	  start = i + 1;
+		if (path_str[i] == ':' || path_str[i] == '\0')
+		{
+			end = i;
+			if (end == start)
+			{
+				paths[count] = safe_malloc(3 * sizeof(char));
+				_strcpy(paths[count], "./");
+			}
+			else
+			{
+				paths[count] = safe_malloc((end - start + 1) * sizeof(char));
+				_strncpy(paths[count], &path_str[start], end - start);
+			}
+			count++;
+			start = i + 1;
+		}
+		if (path_str[i] == '\0')
+			break;
+		i++;
 	}
-      if (path_str[i] == '\0')
-	break;
-      i++;
-    }
-  paths[count] = NULL;
-  return (paths);
+	paths[count] = NULL;
+	return (paths);
 }
 
 /**
@@ -140,13 +140,13 @@ char **tokenize_path(char *path_str)
  */
 void free_paths(char **paths)
 {
-  int i;
+	int i;
 
-  i = 0;
-  while (paths[i])
-    {
-      free(paths[i]);
-      i++;
-    }
-  free(paths);
+	i = 0;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
 }
