@@ -10,29 +10,29 @@
  */
 env_t *add_node_env(env_t **head, char *var, char *val)
 {
-  env_t *new_node, *temp;
+	env_t *new_node, *temp;
 
-  new_node = safe_malloc(sizeof(env_t));
+	new_node = safe_malloc(sizeof(env_t));
 
-  new_node->var = _strdup(var);
-  new_node->val = _strdup(val);
-  new_node->next = NULL;
+	new_node->var = _strdup(var);
+	new_node->val = _strdup(val);
+	new_node->next = NULL;
 
-  if (!*head)
-    {
-      *head = new_node;
-    }
-  else
-    {
-      temp = *head;
+	if (!*head)
+	{
+		*head = new_node;
+	}
+	else
+	{
+		temp = *head;
 
-      while (temp->next)
-	temp = temp->next;
+		while (temp->next)
+			temp = temp->next;
 
-      temp->next = new_node;
-    }
+		temp->next = new_node;
+	}
 
-  return (new_node);
+	return (new_node);
 }
 
 /**
@@ -45,23 +45,23 @@ env_t *add_node_env(env_t **head, char *var, char *val)
  */
 int modify_node_env(env_t **head, char *new_var, char *new_val)
 {
-  env_t *temp;
+	env_t *temp;
 
-  temp = *head;
+	temp = *head;
 
-  while (temp)
-    {
-      if (_strcmp(temp->var, new_var) == 0)
+	while (temp)
 	{
-	  free(temp->val);
-	  temp->val = _strdup(new_val);
+		if (_strcmp(temp->var, new_var) == 0)
+		{
+			free(temp->val);
+			temp->val = _strdup(new_val);
 
-	  return (EXT_SUCCESS);
+			return (EXT_SUCCESS);
+		}
+		temp = temp->next;
 	}
-      temp = temp->next;
-    }
 
-  return (EXT_FAILURE);
+	return (EXT_FAILURE);
 }
 
 /**
@@ -73,31 +73,31 @@ int modify_node_env(env_t **head, char *new_var, char *new_val)
  */
 int remove_node_env(env_t **head, char *var)
 {
-  env_t *copy_head = *head, *temp = *head;
+	env_t *copy_head = *head, *temp = *head;
 
-  if (head == NULL)
-    return (EXT_FAILURE);
-  copy_head = NULL;
-  while (temp)
-    {
-      if (_strcmp(temp->var, var) == 0)
+	if (head == NULL)
+		return (EXT_FAILURE);
+	copy_head = NULL;
+	while (temp)
 	{
-	  if (copy_head)
-	    copy_head->next = temp->next;
-	  else
-	    *head = temp->next;
+		if (_strcmp(temp->var, var) == 0)
+		{
+			if (copy_head)
+				copy_head->next = temp->next;
+			else
+				*head = temp->next;
 
-	  free(temp->var);
-	  free(temp->val);
-	  free(temp);
+			free(temp->var);
+			free(temp->val);
+			free(temp);
 
-	  return (EXT_SUCCESS);
+			return (EXT_SUCCESS);
+		}
+		copy_head = temp;
+		temp = temp->next;
 	}
-      copy_head = temp;
-      temp = temp->next;
-    }
 
-  return (EXT_FAILURE);
+	return (EXT_FAILURE);
 }
 
 /**
@@ -109,17 +109,17 @@ int remove_node_env(env_t **head, char *var)
  */
 env_t *fetch_node(env_t *head, char *var)
 {
-  env_t *tmp;
+	env_t *tmp;
 
-  tmp = head;
+	tmp = head;
 
-  while (tmp != NULL)
-    {
-      if (_strcmp(tmp->var, var) == 0)
-	return (tmp);
+	while (tmp != NULL)
+	{
+		if (_strcmp(tmp->var, var) == 0)
+			return (tmp);
 
-      tmp = tmp->next;
-    }
+		tmp = tmp->next;
+	}
 
-  return (NULL);
+	return (NULL);
 }
