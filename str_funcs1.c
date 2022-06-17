@@ -10,21 +10,21 @@
  */
 char *_strncat(char *dest, char *src, int n)
 {
-  int i = 0, j = 0;
+	int i = 0, j = 0;
 
-  while (dest[i] != '\0')
-    i++;
+	while (dest[i] != '\0')
+		i++;
 
-  while (j < n && src[j] != '\0')
-    {
-      dest[i] = src[j];
-      i++;
-      j++;
-    }
+	while (j < n && src[j] != '\0')
+	{
+		dest[i] = src[j];
+		i++;
+		j++;
+	}
 
-  dest[i] = '\0';
+	dest[i] = '\0';
 
-  return (dest);
+	return (dest);
 }
 
 /**
@@ -37,23 +37,24 @@ char *_strncat(char *dest, char *src, int n)
 
 int _strcmp(const char *s1, const char *s2)
 {
-  int i;
+	int i;
 
-  i = 0;
+	i = 0;
 
-  while (TRUE)
-    {
-      if (s1[i] != s2[i])
-	return (s1[i] - s2[i]);
+	while (TRUE)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 
-      if (s1[i] == '\0' || s2[i] == '\0')
-	break;
+		if (s1[i] == '\0' || s2[i] == '\0')
+			break;
 
-      i++;
-    }
+		i++;
+	}
 
-  return (0);
+	return (0);
 }
+
 /**
  * _strlen - finds and returns length of string
  * @str: string to find length
@@ -62,12 +63,12 @@ int _strcmp(const char *s1, const char *s2)
  */
 unsigned int _strlen(const char *str)
 {
-  int i = 0;
+	int i = 0;
 
-  while (str[i] != '\0')
-    i++;
+	while (str[i] != '\0')
+		i++;
 
-  return (i);
+	return (i);
 }
 
 /**
@@ -78,21 +79,21 @@ unsigned int _strlen(const char *str)
  */
 char *_strdup(char *str)
 {
-  unsigned int len, j;
-  char *ptrstring;
+	unsigned int len, j;
+	char *ptrstring;
 
-  if (str == NULL)
-    return (NULL);
+	if (str == NULL)
+		return (NULL);
 
-  len = _strlen(str);
+	len = _strlen(str);
 
-  ptrstring = safe_malloc((len + 1) * sizeof(char));
+	ptrstring = safe_malloc((len + 1) * sizeof(char));
 
-  for (j = 0; j < len; j++)
-    ptrstring[j] = str[j];
-  ptrstring[j] = '\0';
+	for (j = 0; j < len; j++)
+		ptrstring[j] = str[j];
+	ptrstring[j] = '\0';
 
-  return (ptrstring);
+	return (ptrstring);
 }
 
 /**
@@ -105,11 +106,11 @@ char *_strdup(char *str)
  */
 int _strncmp(char *s1, char *s2, unsigned int n)
 {
-  unsigned int j;
+	unsigned int j;
 
-  for (j = 0; j < n; j++)
-    if (s1[j] != s2[j])
-      return (s1[j] - s2[j]);
+	for (j = 0; j < n; j++)
+		if (s1[j] != s2[j])
+			return (s1[j] - s2[j]);
 
-  return (0);
+	return (0);
 }
