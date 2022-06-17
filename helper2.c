@@ -5,8 +5,8 @@
  */
 void help_history(void)
 {
-  _puts("\nUsage: $ history");
-  _puts("Display the history list.");
+	_puts("\nUsage: $ history");
+	_puts("Display the history list.");
 }
 
 /**
@@ -14,8 +14,8 @@ void help_history(void)
  */
 void help_setenv(void)
 {
-  _puts("\nUsage: $ setenv [NAME] [VALUE]");
-  _puts("\tSets a new environmental variable");
+	_puts("\nUsage: $ setenv [NAME] [VALUE]");
+	_puts("\tSets a new environmental variable");
 }
 
 /**
@@ -23,6 +23,6 @@ void help_setenv(void)
  */
 void help_unsetenv(void)
 {
-  _puts("\nUsage: $ unsetenv [NAME]");
-  _puts("\tUnsets a saved environmental variable");
+	_puts("\nUsage: $ unsetenv [NAME]");
+	_puts("\tUnsets a saved environmental variable");
 }
