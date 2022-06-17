@@ -14,7 +14,7 @@
 
 .SH SYNOPSIS
 
-.B  ./hsh
+.B	./hsh
 
 
 
@@ -94,6 +94,7 @@ This secion has information on the included builtin commands with simple_shell
 .It
 .B env
 - writes environment to stdout
+
 .IT
 .B setenv
 - sets or changes an environmental variable. example: 'setenv USER=bobby'
@@ -134,11 +135,13 @@ This secion has information on the included builtin commands with simple_shell
 .BR sh (1),
 .BR bash (1),
 
+
+
 .SH BUGS
 
 none known.  simple_shell does not currently replicate these tasks:
 
 .SH AUTHOR
 
-Ahuron Emmanuel <xahurone@gmail.com>
-Odzao Esther Lardze <odzaoe@gmail.com@gmail.com>
+Olumide Micheal Tolulope <olumidemicheal7@gmail.com>
+Ahmed Gbadamosi <amurtala@gmail.com>
