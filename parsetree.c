@@ -8,15 +8,15 @@
  */
 ptree_t *ptree_new_node(ptree_t *parent)
 {
-  ptree_t *node = safe_malloc(sizeof(ptree_t));
+	ptree_t *node = safe_malloc(sizeof(ptree_t));
 
-  node->left = NULL;
-  node->right = NULL;
-  node->parent = parent;
-  node->strings = NULL;
-  node->stringsN = 0;
+	node->left = NULL;
+	node->right = NULL;
+	node->parent = parent;
+	node->strings = NULL;
+	node->stringsN = 0;
 
-  return (node);
+	return (node);
 }
 
 /**
@@ -28,43 +28,44 @@ ptree_t *ptree_new_node(ptree_t *parent)
  * Return: pointer to the newly created child node or root node
  */
 ptree_t *ptree_new_string_node(ptree_t *parent, tokens_t *tokens,
-			       unsigned int *cur_token)
+							   unsigned int *cur_token)
 {
-  unsigned int i;
-  unsigned int start, finish;
-  ptree_t *node;
+	unsigned int i;
+	unsigned int start, finish;
+	ptree_t *node;
 
-  /* checks if the current token is a string or if we've run out of tokens */
-  if ((*cur_token >= tokens->tokensN) || (tokens->tokens[*cur_token].id !=
-					  TOKEN_STRING))
-    return (NULL);
+	/* checks if the current token is a string or if we've run out of tokens */
+	if ((*cur_token >= tokens->tokensN) || (tokens->tokens[*cur_token].id !=
+											TOKEN_STRING))
+		return (NULL);
 
-  node = ptree_new_node(parent);
+	node = ptree_new_node(parent);
 
-  /* calculate number of strings after this token */
-  start = *cur_token;
+	/* calculate number of strings after this token */
+	start = *cur_token;
 
-  while ((*cur_token < tokens->tokensN) && (tokens->tokens[*cur_token].id ==
-					    TOKEN_STRING))
-    (*cur_token)++;
+	while ((*cur_token < tokens->tokensN) && (tokens->tokens[*cur_token].id ==
+											  TOKEN_STRING))
+		(*cur_token)++;
 
-  finish = *cur_token;
+	finish = *cur_token;
 
-  /* We now know how pointers to strings we need to malloc for */
-  /* Initialize everything else */
-  node->token_id = TOKEN_STRING;
-  node->stringsN = finish - start;
-  node->strings = safe_malloc((node->stringsN + 1) * sizeof(char *));
+	/* We now know how pointers to strings we need to malloc for */
+	/* Initialize everything else */
+	node->token_id = TOKEN_STRING;
+	node->stringsN = finish - start;
+	node->strings = safe_malloc((node->stringsN + 1) * sizeof(char *));
 
 
-  /* initialize stringsssssssss */
-  for (i = 0; i < node->stringsN; i++)
-    node->strings[i] = _strdup(tokens->tokens[i + start].str);
+	/* initialize stringsssssssss */
+	for (i = 0; i < node->stringsN; i++)
+		node->strings[i] = _strdup(tokens->tokens[i + start].str);
 
-  node->strings[i] = NULL;
+	node->strings[i] = NULL;
 
-  return (node);
+	return (node);
 }
+
 
 /**
  * delete_ptree - cuts down the MEGA TREE
@@ -75,29 +76,29 @@ ptree_t *ptree_new_string_node(ptree_t *parent, tokens_t *tokens,
  */
 int delete_ptree(ptree_t *node)
 {
-  unsigned int i;
+	unsigned int i;
 
-  /* Base case: when node is NULL */
-  if (!node)
-    return (0);
+	/* Base case: when node is NULL */
+	if (!node)
+		return (0);
 
-  /* Recussively delete child nodes */
-  delete_ptree(node->left);
-  delete_ptree(node->right);
+	/* Recussively delete child nodes */
+	delete_ptree(node->left);
+	delete_ptree(node->right);
 
-  /* free strings */
-  if (node->strings)
-    {
-      i = 0;
-      while (node->strings[i])
+	/* free strings */
+	if (node->strings)
 	{
-	  free(node->strings[i]);
-	  i++;
+		i = 0;
+		while (node->strings[i])
+		{
+			free(node->strings[i]);
+			i++;
+		}
+		free(node->strings);
 	}
-      free(node->strings);
-    }
 
-  /* delete input node (could be root node, could be some child node) */
-  free(node);
-  return (0);
+	/* delete input node (could be root node, could be some child node) */
+	free(node);
+	return (0);
 }
