@@ -8,20 +8,20 @@
  */
 int _env(arg_inventory_t *arginv)
 {
-  env_t *envlist = arginv->envlist;
-  char **commands;
+	env_t *envlist = arginv->envlist;
+	char **commands;
 
-  commands = (char **)arginv->commands;
+	commands = (char **)arginv->commands;
 
-  if (commands[1] != NULL)
-    {
-      _perror("env: No such file or directory\n");
-      return (-1);
-    }
+	if (commands[1] != NULL)
+	{
+		_perror("env: No such file or directory\n");
+		return (-1);
+	}
 
-  print_list(envlist);
+	print_list(envlist);
 
-  return (EXT_SUCCESS);
+	return (EXT_SUCCESS);
 }
 
 /**
@@ -32,11 +32,11 @@ int _env(arg_inventory_t *arginv)
  */
 int _history(arg_inventory_t *arginv)
 {
-  history_t *historylist = arginv->history;
+	history_t *historylist = arginv->history;
 
-  write_history(historylist);
+	write_history(historylist);
 
-  return (EXT_SUCCESS);
+	return (EXT_SUCCESS);
 }
 
 /**
@@ -47,32 +47,32 @@ int _history(arg_inventory_t *arginv)
  */
 int _setenv(arg_inventory_t *arginv)
 {
-  char **commands, *new_var, *new_val;
-  env_t *envlist = arginv->envlist;
+	char **commands, *new_var, *new_val;
+	env_t *envlist = arginv->envlist;
 
-  commands = (char **)arginv->commands;
+	commands = (char **)arginv->commands;
 
-  if (commands[1] == NULL || commands[2] == NULL)
-    {
-      _perror("setenv: missing parameters.\n");
-      return (-1);
-    }
+	if (commands[1] == NULL || commands[2] == NULL)
+	{
+		_perror("setenv: missing parameters.\n");
+		return (-1);
+	}
 
-  if (commands[3] != NULL)
-    {
-      _perror("setenv: missing value.\n");
-      return (-1);
-    }
+	if (commands[3] != NULL)
+	{
+		_perror("setenv: missing value.\n");
+		return (-1);
+	}
 
-  new_var = commands[1];
-  new_val = commands[2];
+	new_var = commands[1];
+	new_val = commands[2];
 
-  if (modify_node_env(&envlist, new_var, new_val) == EXT_FAILURE)
-    {
-      add_node_env(&envlist, new_var, new_val);
-    }
+	if (modify_node_env(&envlist, new_var, new_val) == EXT_FAILURE)
+	{
+		add_node_env(&envlist, new_var, new_val);
+	}
 
-  return (EXT_SUCCESS);
+	return (EXT_SUCCESS);
 }
 
 /**
@@ -83,25 +83,25 @@ int _setenv(arg_inventory_t *arginv)
  */
 int _unsetenv(arg_inventory_t *arginv)
 {
-  char **commands;
-  env_t *envlist = arginv->envlist;
+	char **commands;
+	env_t *envlist = arginv->envlist;
 
-  commands = (char **)arginv->commands;
+	commands = (char **)arginv->commands;
 
-  if (commands[1] == NULL)
-    {
-      _perror("unsetenv: missing parameters.\n");
-      return (-1);
-    }
+	if (commands[1] == NULL)
+	{
+		_perror("unsetenv: missing parameters.\n");
+		return (-1);
+	}
 
-  if (commands[2] != NULL)
-    {
-      _perror("unsetenv: too many input commands.\n");
-      return (-1);
-    }
+	if (commands[2] != NULL)
+	{
+		_perror("unsetenv: too many input commands.\n");
+		return (-1);
+	}
 
-  if (remove_node_env(&envlist, commands[1]))
-    return (EXT_FAILURE);
+	if (remove_node_env(&envlist, commands[1]))
+		return (EXT_FAILURE);
 
-  return (EXT_SUCCESS);
+	return (EXT_SUCCESS);
 }
