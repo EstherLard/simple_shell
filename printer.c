@@ -8,18 +8,18 @@
  */
 unsigned int write_history(history_t *head)
 {
-  unsigned int i = 0;
+	unsigned int i = 0;
 
-  while (head)
-    {
-      write_uint(head->number);
-      write(STDOUT_FILENO, "  ", 2);
-      write(STDOUT_FILENO, head->command, _strlen(head->command));
-      head = head->next;
-      i++;
-    }
+	while (head)
+	{
+		write_uint(head->number);
+		write(STDOUT_FILENO, "  ", 2);
+		write(STDOUT_FILENO, head->command, _strlen(head->command));
+		head = head->next;
+		i++;
+	}
 
-  return (i);
+	return (i);
 }
 
 /**
@@ -29,27 +29,27 @@ unsigned int write_history(history_t *head)
  */
 int write_uint(unsigned int n)
 {
-  unsigned int copy, size;
-  int nth, chars_written = 0;
+	unsigned int copy, size;
+	int nth, chars_written = 0;
 
-  size = 1;
-  copy = n;
-  if (n < 10)
-    {
-      _putchar('0' + n);
-      return (1);
-    }
-  while (copy / 10 != 0)
-    copy /= 10, size *= 10;
-  while (size > 0)
-    {
-      nth = n / size;
-      _putchar('0' + nth);
-      n -= nth * size;
-      size /= 10;
-      chars_written++;
-    }
-  return (chars_written);
+	size = 1;
+	copy = n;
+	if (n < 10)
+	{
+		_putchar('0' + n);
+		return (1);
+	}
+	while (copy / 10 != 0)
+		copy /= 10, size *= 10;
+	while (size > 0)
+	{
+		nth = n / size;
+		_putchar('0' + nth);
+		n -= nth * size;
+		size /= 10;
+		chars_written++;
+	}
+	return (chars_written);
 }
 
 /**
@@ -60,8 +60,8 @@ int write_uint(unsigned int n)
  */
 void _puts(char *str)
 {
-  write(STDOUT_FILENO, str, _strlen(str));
-  _putchar('\n');
+	write(STDOUT_FILENO, str, _strlen(str));
+	_putchar('\n');
 }
 
 /**
@@ -73,7 +73,7 @@ void _puts(char *str)
  */
 int _putchar(char c)
 {
-  return (write(1, &c, 1));
+	return (write(1, &c, 1));
 }
 
 /**
@@ -84,18 +84,18 @@ int _putchar(char c)
  */
 size_t print_list(env_t *head)
 {
-  unsigned int i = 0;
-  char **_environ;
+	unsigned int i = 0;
+	char **_environ;
 
-  _environ = link_to_dpointer(head);
+	_environ = link_to_dpointer(head);
 
-  while (_environ[i])
-    {
-      _puts(_environ[i]);
-      free(_environ[i]);
-      i++;
-    }
+	while (_environ[i])
+	{
+		_puts(_environ[i]);
+		free(_environ[i]);
+		i++;
+	}
 
-  free(_environ);
-  return (i);
+	free(_environ);
+	return (i);
 }
