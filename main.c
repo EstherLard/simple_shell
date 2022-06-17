@@ -9,9 +9,9 @@
  */
 void sig_handler(int sig)
 {
-  (void) sig;
-  _puts("");
-  write(STDOUT_FILENO, "$ ", 2);
+	(void) sig;
+	_puts("");
+	write(STDOUT_FILENO, "$ ", 2);
 }
 
 /**
@@ -20,43 +20,43 @@ void sig_handler(int sig)
  */
 int main(void)
 {
-  arg_inventory_t *arginv;
-  int exit_status;
+	arg_inventory_t *arginv;
+	int exit_status;
 
-  arginv = buildarginv();
-  signal(SIGINT, sig_handler);
-  while (!arginv->exit)
-    {
-      if (arginv->st_mode)
+	arginv = buildarginv();
+	signal(SIGINT, sig_handler);
+	while (!arginv->exit)
 	{
-	  write(STDOUT_FILENO, "$ ", 2);
+		if (arginv->st_mode)
+		{
+			write(STDOUT_FILENO, "$ ", 2);
+		}
+		if (!_getline(&arginv->input_commands, &arginv->buflimit))
+			break;
+		add_node_history(&arginv->history, arginv->input_commands);
+
+		tokenize(&arginv->tokens, arginv->input_commands);
+
+		if (arginv->tokens.tokensN > 0)
+		{
+			expand_bash_vars(arginv);
+
+			if (parse(&arginv->parser, &arginv->tokens))
+			{
+				delete_parser(&arginv->parser);
+				delete_tokens(&arginv->tokens);
+				continue;
+			}
+
+			process_execute(arginv);
+			delete_parser(&arginv->parser);
+		}
+
+		mem_reset(arginv->input_commands, BUFSIZE);
+
+		delete_tokens(&arginv->tokens);
 	}
-      if (!_getline(&arginv->input_commands, &arginv->buflimit))
-	break;
-      add_node_history(&arginv->history, arginv->input_commands);
+	exit_status = freeall(arginv);
 
-      tokenize(&arginv->tokens, arginv->input_commands);
-
-      if (arginv->tokens.tokensN > 0)
-	{
-	  expand_bash_vars(arginv);
-
-	  if (parse(&arginv->parser, &arginv->tokens))
-	    {
-	      delete_parser(&arginv->parser);
-	      delete_tokens(&arginv->tokens);
-	      continue;
-	    }
-
-	  process_execute(arginv);
-	  delete_parser(&arginv->parser);
-	}
-
-      mem_reset(arginv->input_commands, BUFSIZE);
-
-      delete_tokens(&arginv->tokens);
-    }
-  exit_status = freeall(arginv);
-
-  return (exit_status);
+	return (exit_status);
 }
