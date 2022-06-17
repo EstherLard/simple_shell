@@ -8,30 +8,31 @@
  */
 int save_alias(arg_inventory_t *arginv)
 {
-  alias_t *tmp = arginv->alias;
-  char *file, *buffer;
-  int fd;
+	alias_t *tmp = arginv->alias;
+	char *file, *buffer;
+	int fd;
 
-  file = arginv->alias_file;
+	file = arginv->alias_file;
 
-  fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-  close(fd);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	close(fd);
 
-  while (tmp)
-    {
-      buffer = (char *)safe_malloc(_strlen(tmp->alias) + _strlen(tmp->command)
-				   + 4);
-      _strcpy(buffer, tmp->alias);
-      _strcat(buffer, ":");
-      _strcat(buffer, tmp->command);
-      _strcat(buffer, "\n");
-      append_text_to_file(file, buffer);
-      tmp = tmp->next;
-      free(buffer);
-    }
+	while (tmp)
+	{
+		buffer = (char *)safe_malloc(_strlen(tmp->alias) + _strlen(tmp->command)
+									 + 4);
+		_strcpy(buffer, tmp->alias);
+		_strcat(buffer, ":");
+		_strcat(buffer, tmp->command);
+		_strcat(buffer, "\n");
+		append_text_to_file(file, buffer);
+		tmp = tmp->next;
+		free(buffer);
+	}
 
-  return (0);
+	return (0);
 }
+
 /**
  * load_alias - loads alias definitions from file
  * @arginv: arguments inventory
@@ -40,35 +41,35 @@ int save_alias(arg_inventory_t *arginv)
  */
 int load_alias(arg_inventory_t *arginv)
 {
-  ssize_t count;
-  size_t sz = BUFSIZE;
-  char *file, *buffer, *val;
-  int fd;
+	ssize_t count;
+	size_t sz = BUFSIZE;
+	char *file, *buffer, *val;
+	int fd;
 
-  file = arginv->alias_file;
+	file = arginv->alias_file;
 
-  fd = open(file, O_RDONLY);
-  if (fd == -1)
-    {
-      free(file);
-      return (1);
-    }
-  buffer = (char *)safe_malloc(sz);
-  while ((count = _readline(fd, &buffer, &sz)) != 0)
-    {
-      while (buffer[count - 1] == '\n')
-	buffer[count - 1] = '\0';
-      val = buffer;
-      while (*val && *val != ':')
-	val++;
-      if (!*val)
-	break;
-      *(val++) = '\0';
-      add_node_alias(&arginv->alias, buffer, val);
-    }
-  free(buffer);
-  close(fd);
-  return (0);
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+	{
+		free(file);
+		return (1);
+	}
+	buffer = (char *)safe_malloc(sz);
+	while ((count = _readline(fd, &buffer, &sz)) != 0)
+	{
+		while (buffer[count - 1] == '\n')
+			buffer[count - 1] = '\0';
+		val = buffer;
+		while (*val && *val != ':')
+			val++;
+		if (!*val)
+			break;
+		*(val++) = '\0';
+		add_node_alias(&arginv->alias, buffer, val);
+	}
+	free(buffer);
+	close(fd);
+	return (0);
 }
 
 /**
@@ -80,17 +81,17 @@ int load_alias(arg_inventory_t *arginv)
  */
 alias_t *fetch_node_alias(alias_t *head, char *var)
 {
-  alias_t *tmp;
+	alias_t *tmp;
 
-  tmp = head;
+	tmp = head;
 
-  while (tmp != NULL)
-    {
-      if (_strcmp(tmp->alias, var) == 0)
-	return (tmp);
+	while (tmp != NULL)
+	{
+		if (_strcmp(tmp->alias, var) == 0)
+			return (tmp);
 
-      tmp = tmp->next;
-    }
+		tmp = tmp->next;
+	}
 
-  return (NULL);
+	return (NULL);
 }
