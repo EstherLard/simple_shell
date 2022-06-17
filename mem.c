@@ -10,34 +10,34 @@
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-  char *p;
-  unsigned int i;
+	char *p;
+	unsigned int i;
 
-  if (ptr == NULL)
-    {
-      p = safe_malloc(new_size);
-      return (p);
-    }
+	if (ptr == NULL)
+	{
+		p = safe_malloc(new_size);
+		return (p);
+	}
 
-  if (new_size == 0)
-    {
-      free(ptr);
-      return (NULL);
-    }
+	if (new_size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
 
-  if (old_size == new_size)
-    return (ptr);
+	if (old_size == new_size)
+		return (ptr);
 
-  p = safe_malloc(new_size);
-  if (p == NULL)
-    return (NULL);
+	p = safe_malloc(new_size);
+	if (p == NULL)
+		return (NULL);
 
-  for (i = 0; i < old_size && i < new_size; i++)
-    p[i] = ((char *)ptr)[i];
+	for (i = 0; i < old_size && i < new_size; i++)
+		p[i] = ((char *)ptr)[i];
 
-  free(ptr);
+	free(ptr);
 
-  return (p);
+	return (p);
 }
 
 /**
@@ -49,12 +49,12 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
  */
 char *mem_reset(char *str, int bytes)
 {
-  int i = 0;
+	int i = 0;
 
-  while (i < bytes)
-    str[i++] = '\0';
+	while (i < bytes)
+		str[i++] = '\0';
 
-  return (str);
+	return (str);
 }
 
 /**
@@ -65,15 +65,15 @@ char *mem_reset(char *str, int bytes)
  */
 void *safe_malloc(int bytes)
 {
-  void *check;
+	void *check;
 
-  check = malloc(bytes);
-  if (check == NULL)
-    {
-      _perror("No Memory\n");
-      exit(1);
-    }
-  check = mem_reset(check, bytes);
+	check = malloc(bytes);
+	if (check == NULL)
+	{
+		_perror("No Memory\n");
+		exit(1);
+	}
+	check = mem_reset(check, bytes);
 
-  return (check);
+	return (check);
 }
